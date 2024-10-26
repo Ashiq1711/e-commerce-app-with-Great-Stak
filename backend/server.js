@@ -4,6 +4,9 @@ import 'dotenv/config'
 import connectDB from "./config/mongodb.js";
 import connectCloudinary from "./config/cloudinary.js";
 import userRouter from "./routes/userRoute.js";
+import productRouter from "./routes/productRouter.js";
+import bannerRoute from "./routes/bannerRoute.js";
+import cartRouter from "./routes/cartRouter.js";
 
 // App config//
 
@@ -19,8 +22,10 @@ app.use(cors())
 
 // api end point 
 app.use('/api/user', userRouter)
-app.get('/',(req,res)=>{
-    res.send('api ')
-})
+app.use('/api/product', productRouter)
+app.use('/api/banner', bannerRoute)
+app.use('/api/cart', cartRouter)
+
+
 
 app.listen(port,()=>console.log('Server Started on PORT :'+ port))

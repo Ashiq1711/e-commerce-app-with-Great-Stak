@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { assets } from "../assets/assets";
-
+import axios from "axios";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
+import { toast } from "react-toastify";
+import { backendUrl } from "../../../admin/src/App";
 const Hero = () => {
+  const [banner, setBanner] = useState([]);
+  const getBannerData = async () => {
+    try {
+      const response = await axios.get(backendUrl + "/api/banner/list");
+      setBanner(response.data.listBanner[0].image);
+      console.log(banner);
+      //  if (response.data.success) {
+
+      //    console.log(response)
+      //  }else{
+      //   toast.error(response.data.message)
+      //  }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+  useEffect(() => {
+    getBannerData();
+  }, []);
   return (
     <div className="flex flex-col sm:flex-row border border-gray-400">
       {/* ************* Left Side*************** */}
@@ -23,9 +47,21 @@ const Hero = () => {
         </div>
       </div>
       {/* ************* Right Side*************** */}
-
-        <img className="w-full sm:w-1/2" src={assets.hero_img} alt="" />
-     
+      <Carousel
+        showIndicators={false}
+        thumbWidth={55}
+        showStatus={false}
+        autoPlay={true}
+        infiniteLoop={true}
+       
+        className="w-full sm:w-1/2 text-center"
+      >
+        {banner.map((src, index) => (
+          <div>
+            <img src={src} alt={`Image ${index + 1}`} />
+          </div>
+        ))}
+      </Carousel>
     </div>
   );
 };

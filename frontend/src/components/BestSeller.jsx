@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Title from './Title'
 import { ShopContext } from '../context/ShopContex'
 import ProductItem from './ProductItem'
@@ -6,10 +6,12 @@ import ProductItem from './ProductItem'
 const BestSeller = () => {
     const {products}=useContext(ShopContext)
     const [bestSeller,setBestSeller]=useState([])
-    useState(()=>{
+  
+    useEffect(()=>{
 const bestproduct=products.filter((item)=>(item.bestseller))
 setBestSeller(bestproduct.slice(0,5))
-    },[])
+    },[products])
+
   return (
     <div className='my-8'>
     <div className="text-center py-8 text-3xl">
