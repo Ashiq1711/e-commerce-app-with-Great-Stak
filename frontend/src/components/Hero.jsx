@@ -54,7 +54,7 @@ const Hero = () => {
         autoPlay={true}
         infiniteLoop={true}
        
-        className="w-full sm:w-1/2 text-center"
+        className="w-full sm:w-1/2 text-center -z-10"
       >
         {banner.map((src, index) => (
           <div>
